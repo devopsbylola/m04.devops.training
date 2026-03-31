@@ -1,0 +1,27 @@
+version: v1.0
+name: "\U0001F3AF Simple CI Pipeline"
+agent:
+  machine:
+    type: f1-standard-2
+    os_image: ubuntu2404
+fail_fast:
+  stop:
+    when: branch != 'main'
+auto_cancel:
+  running:
+    when: branch != 'main'
+  queued:
+    when: branch = 'main'
+blocks:
+  - name: Build and push Docker image
+    dependencies: []
+    task:
+      jobs:
+        - name: Build and push
+          commands:
+            - checkout
+            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+            - 'docker build -t $DOCKER_USERNAME/myapp:$SEMAPHORE_GIT_SHA 8-pipeline/'''
+            - 'docker tag $DOCKER_USERNAME/myapp:$SEMAPHORE_GIT_SHA $DOCKER_USERNAME/myapp:latest'''
+            - 'docker push $DOCKER_USERNAME/myapp:$SEMAPHORE_GIT_SHA'''
+            - 'docker push $DOCKER_USERNAME/myapp:latest'''
