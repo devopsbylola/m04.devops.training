@@ -21,9 +21,9 @@ blocks:
           commands:
             - checkout
             - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-            - 'docker build -t $DOCKER_USERNAME/myapp:$SEMAPHORE_GIT_SHA 8-pipeline/'''
-            - 'docker tag $DOCKER_USERNAME/myapp:$SEMAPHORE_GIT_SHA $DOCKER_USERNAME/myapp:latest'''
-            - 'docker push $DOCKER_USERNAME/myapp:$SEMAPHORE_GIT_SHA'''
-            - 'docker push $DOCKER_USERNAME/myapp:latest'''
+            - 'docker build -t $DOCKER_USERNAME/myapp:$SEMAPHORE_GIT_SHA 8-pipeline/'
+            - 'docker tag $DOCKER_USERNAME/myapp:$SEMAPHORE_GIT_SHA $DOCKER_USERNAME/myapp:latest'
+            - 'docker push $DOCKER_USERNAME/myapp:$SEMAPHORE_GIT_SHA'
+            - 'docker push $DOCKER_USERNAME/myapp:latest'
       secrets:
         - name: Docker_Login_Lola
